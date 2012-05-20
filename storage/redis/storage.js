@@ -42,7 +42,7 @@ Storage = function(options, callback) {
         port: 6379,
         database: 0,
         eventsCollectionName: 'events',
-        snapshotsCollectionName: 'snapshots'
+        snapshotsCollectionName: 'snapshots',
         beforeReady: function () { /*no-op*/ }
     };
     
