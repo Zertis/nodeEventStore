@@ -43,6 +43,7 @@ Storage = function(options, callback) {
         database: 0,
         eventsCollectionName: 'events',
         snapshotsCollectionName: 'snapshots'
+        beforeReady: function () { /*no-op*/ }
     };
     
     this.options = mergeOptions(options, defaults);
@@ -63,6 +64,10 @@ Storage.prototype = {
         this.client = redis.createClient(this.options.port, this.options.host);
     
         var self = this;
+        if (this.options.beforeReady) {
+            // authentication can be in your `beforeReady` option fn
+            self.options.beforeReady(null, self);
+        }
         this.client.on('ready', function () {
             if (self.options.database !== 0) {
                 self.client.select(self.options.database, function(err, ok) {
